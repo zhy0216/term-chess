@@ -7,13 +7,8 @@ export class Rules {
 
   // Check if a move is valid based on piece type and game rules
   isValidMove(piece: Piece, targetPos: Position): boolean {
-    // Basic validation
+    // Basic validation - only checking if position is within board boundaries
     if (!this.board.isValidPosition(targetPos)) {
-      return false;
-    }
-    
-    // Pieces cannot be placed in the river
-    if (this.board.isRiver(targetPos)) {
       return false;
     }
 
@@ -211,16 +206,16 @@ export class Rules {
     // Direction depends on color
     const forward = piece.color === PieceColor.RED ? -1 : 1;
     
-    // Check if the soldier has crossed the river (river is now at row 3)
-    const hasCrossedRiver = piece.color === PieceColor.RED 
-      ? piece.position.y < 4 
-      : piece.position.y > 3;
+    // Since there's no river now, we'll set a boundary in the middle of the board (row 4)
+    const hasPassedMidpoint = piece.color === PieceColor.RED 
+      ? piece.position.y < 5 
+      : piece.position.y > 4;
     
-    if (!hasCrossedRiver) {
-      // Before crossing the river, can only move forward
+    if (!hasPassedMidpoint) {
+      // Before passing the middle, can only move forward
       return dx === 0 && dy === forward;
     } else {
-      // After crossing, can move forward or horizontally
+      // After passing the middle, can move forward or horizontally
       return (dx === 0 && dy === forward) || (dx === 1 && dy === 0);
     }
   }

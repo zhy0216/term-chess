@@ -93,8 +93,8 @@ export const BoardComponent: React.FC<BoardProps> = ({
       
       // For each row
       for (let y = 0; y < ROWS; y++) {
-        // Define river as just row 4 (not both 4 and 5 as before)
-        const isRiver = y === 4;
+        // No river anymore
+        const isRiver = false;
         
         // Create a row with pieces at intersections
         const row = (
@@ -141,10 +141,6 @@ export const BoardComponent: React.FC<BoardProps> = ({
               } else if (isHighlighted) {
                 bgColor = 'green';
                 color = 'black';
-              } else if (isRiver) {
-                // Always use blue background for river regardless of content
-                bgColor = 'blueBright';
-                color = 'white';
               }
               
               // Determine piece color with dark mode support
@@ -166,13 +162,6 @@ export const BoardComponent: React.FC<BoardProps> = ({
                 // No more diagonal lines in palaces, use uniform dots
                 if (isRedPalaceDiagonal || isBlackPalaceDiagonal) {
                   cellContent = EMPTY_POSITION;
-                } else if (isRiver) {
-                  // River content based on position - better centered
-                  if (x === 3) cellContent = '楚';
-                  else if (x === 4) cellContent = '河';
-                  else if (x === 5) cellContent = '汉';
-                  else if (x === 6) cellContent = '界';
-                  else cellContent = SPACE; // Use space for better appearance in blue background
                 } else {
                   // Use full-width dots to represent positions
                   cellContent = EMPTY_POSITION;
