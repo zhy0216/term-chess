@@ -72,7 +72,7 @@ export class Piece {
   public position: Position;
   public readonly symbol: string;
   
-  constructor(id: string, type: PieceType, color: PieceColor, position: Position, useUnicode: boolean = true) {
+  constructor(id: string, type: PieceType, color: PieceColor, position: Position, useUnicode: boolean = false) {
     this.id = id;
     this.type = type;
     this.color = color;
@@ -129,7 +129,7 @@ export class Piece {
   }
   
   // Static method to get symbol for a piece type and color
-  static getSymbol(type: PieceType, color: PieceColor, useUnicode: boolean = true): string {
+  static getSymbol(type: PieceType, color: PieceColor, useUnicode: boolean = false): string {
     if (useUnicode) {
       return Piece.SYMBOLS[color][type];
     }
