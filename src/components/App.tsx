@@ -9,6 +9,7 @@ export const App: React.FC = () => {
   const [game, setGame] = useState<Game>(new Game());
   const [, setRender] = useState<number>(0);
   const [ai] = useState<ChessAI>(new ChessAI(game));
+  const [darkMode, setDarkMode] = useState<boolean>(false); // Add dark mode state
   
   // Force render update
   const forceUpdate = () => setRender(prev => prev + 1);
@@ -71,6 +72,12 @@ export const App: React.FC = () => {
       forceUpdate();
     }
     
+    // Toggle dark mode
+    if (input === 'd') {
+      setDarkMode(!darkMode);
+      forceUpdate();
+    }
+    
     // Quit game
     if (input === 'q') {
       process.exit(0);
@@ -87,6 +94,7 @@ export const App: React.FC = () => {
         selectedPiece={game.selectedPiece}
         validMoves={game.getValidMovesForSelectedPiece()}
         currentPlayer={game.currentPlayer}
+        darkMode={darkMode}
       />
       
       {game.status !== GameStatus.ONGOING && (

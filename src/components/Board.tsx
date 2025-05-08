@@ -27,6 +27,7 @@ interface BoardProps {
   selectedPiece: Piece | null;
   validMoves: Position[];
   currentPlayer: PieceColor;
+  darkMode?: boolean; // Optional dark mode setting
 }
 
 // Board UI component
@@ -35,7 +36,8 @@ export const BoardComponent: React.FC<BoardProps> = ({
   cursorPosition,
   selectedPiece,
   validMoves,
-  currentPlayer
+  currentPlayer,
+  darkMode = false // Default to light mode if not specified
 }) => {
   // Initialize the board grid
   const grid: string[][] = Array(10).fill(0).map(() => Array(9).fill(' '));
@@ -145,11 +147,16 @@ export const BoardComponent: React.FC<BoardProps> = ({
                 color = 'white';
               }
               
-              // Determine piece color
+              // Determine piece color with dark mode support
               if (!isAtCursor && !isSelected && !isHighlighted) {
                 const existingPiece = board.getPieceAt(pos);
                 if (existingPiece) {
-                  color = existingPiece.color === PieceColor.RED ? 'red' : 'black';
+                  if (existingPiece.color === PieceColor.RED) {
+                    color = 'red';
+                  } else {
+                    // In dark mode, display black pieces as white for better visibility
+                    color = darkMode ? 'white' : 'black';
+                  }
                 }
               }
               
@@ -227,7 +234,7 @@ export const BoardComponent: React.FC<BoardProps> = ({
       </Box>
       
       <Text>Use arrow keys to move cursor. Press Space to select/place a piece.</Text>
-      <Text>Press 'q' to quit, 'r' to reset the game.</Text>
+      <Text>Press 'd' to toggle {darkMode ? 'light' : 'dark'} mode, 'q' to quit, 'r' to reset the game.</Text>
     </Box>
   );
 };
