@@ -45,11 +45,12 @@ export class Board {
     this.addPiece(PieceType.CHARIOT, PieceColor.BLACK, { x: 8, y: 0 });
     this.addPiece(PieceType.CANNON, PieceColor.BLACK, { x: 1, y: 2 });
     this.addPiece(PieceType.CANNON, PieceColor.BLACK, { x: 7, y: 2 });
-    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 0, y: 3 });
-    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 2, y: 3 });
-    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 4, y: 3 });
-    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 6, y: 3 });
-    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 8, y: 3 });
+    // Move soldiers to row 2 (just before the river at row 3)
+    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 0, y: 2 });
+    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 2, y: 2 });
+    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 4, y: 2 });
+    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 6, y: 2 });
+    this.addPiece(PieceType.SOLDIER, PieceColor.BLACK, { x: 8, y: 2 });
   }
 
   private addPiece(type: PieceType, color: PieceColor, position: Position) {
@@ -97,7 +98,18 @@ export class Board {
 
   // Check if a position is within the board boundaries
   isValidPosition(position: Position): boolean {
-    return position.x >= 0 && position.x < BOARD_WIDTH &&
-           position.y >= 0 && position.y < BOARD_HEIGHT;
+    // Check if within board boundaries
+    const withinBounds = position.x >= 0 && position.x < BOARD_WIDTH &&
+                        position.y >= 0 && position.y < BOARD_HEIGHT;
+    
+    // Check if not in the river (row 3) - pieces cannot be placed on the river
+    const notInRiver = position.y !== 3;
+    
+    return withinBounds && notInRiver;
+  }
+  
+  // Check if a position is in the river row
+  isRiver(position: Position): boolean {
+    return position.y === 3;
   }
 }

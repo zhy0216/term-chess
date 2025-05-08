@@ -11,6 +11,11 @@ export class Rules {
     if (!this.board.isValidPosition(targetPos)) {
       return false;
     }
+    
+    // Pieces cannot be placed in the river
+    if (this.board.isRiver(targetPos)) {
+      return false;
+    }
 
     // Cannot move to a position occupied by a piece of the same color
     const targetPiece = this.board.getPieceAt(targetPos);
@@ -206,10 +211,10 @@ export class Rules {
     // Direction depends on color
     const forward = piece.color === PieceColor.RED ? -1 : 1;
     
-    // Check if the soldier has crossed the river
+    // Check if the soldier has crossed the river (river is now at row 3)
     const hasCrossedRiver = piece.color === PieceColor.RED 
-      ? piece.position.y < 5 
-      : piece.position.y > 4;
+      ? piece.position.y < 4 
+      : piece.position.y > 3;
     
     if (!hasCrossedRiver) {
       // Before crossing the river, can only move forward
