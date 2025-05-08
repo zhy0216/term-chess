@@ -36,19 +36,12 @@ npm start
 - **r**: Reset the game
 - **q**: Quit the game
 
-## Game Rules
+## Stealth Mode Tips (Use at your own risk)
 
-This game follows standard Chinese Chess (Xiangqi) rules:
+- **Boss Detection**: Terminal-based means you can quickly switch tabs when your boss walks by!
+- **Compile Camouflage**: Play a quick game while waiting for your code to compile - looks just like a build log!
+- **Quick Exit**: Press 'q' and instantly look productive again
+- **Silent Mode**: No sounds or flashy graphics to give you away
+- **Productivity Excuse**: "I'm optimizing my algorithm thinking with strategic games"
+- **Terminal Transparency**: Set your terminal opacity lower to see if anyone's coming
 
-- The board is 9x10
-- Each player has 16 pieces: 1 General, 2 Advisors, 2 Elephants, 2 Horses, 2 Chariots, 2 Cannons, and 5 Soldiers
-- Each piece type has specific movement rules
-- The goal is to checkmate the opponent's General
-
-## Development
-
-The project is organized as follows:
-
-- `src/models/`: Game logic and models
-- `src/components/`: UI components
-- `src/index.tsx`: Entry point
