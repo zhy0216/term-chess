@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { BoardComponent } from './Board.js';
 import { Game, GameStatus } from '../models/Game.js';
@@ -6,7 +6,7 @@ import { ChessAI } from '../models/AI.js';
 import { PieceColor } from '../models/Piece.js';
 
 export const App: React.FC = () => {
-  const [game, setGame] = useState<Game>(new Game());
+  const [game] = useState<Game>(new Game());
   const [, setRender] = useState<number>(0);
   const [ai] = useState<ChessAI>(new ChessAI(game));
   const [darkMode, setDarkMode] = useState<boolean>(false); // Add dark mode state

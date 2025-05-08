@@ -21,10 +21,7 @@ export interface Position {
 
 // Chess piece class
 export class Piece {
-  // Chinese characters for chess pieces
-
-  // Chinese characters for piece symbols
-  private static readonly FALLBACK_SYMBOLS = {
+  private static readonly SYMBOLS = {
     [PieceColor.RED]: {
       [PieceType.GENERAL]: '帅',
       [PieceType.ADVISOR]: '仕',
@@ -51,27 +48,27 @@ export class Piece {
   public readonly color: PieceColor;
   public position: Position;
   public readonly symbol: string;
-  
+
   constructor(id: string, type: PieceType, color: PieceColor, position: Position) {
     this.id = id;
     this.type = type;
     this.color = color;
     this.position = { ...position };
-    
+
     // Set symbol based on piece type and color (using Chinese characters)
-    this.symbol = Piece.FALLBACK_SYMBOLS[color][type];
+    this.symbol = Piece.SYMBOLS[color][type];
   }
-  
+
   // Clone this piece
   clone(): Piece {
     return new Piece(this.id, this.type, this.color, { ...this.position });
   }
-  
+
   // Move the piece to a new position
   moveTo(position: Position): void {
     this.position = { ...position };
   }
-  
+
   // Calculate distance to another position
   distanceTo(position: Position): { dx: number, dy: number } {
     return {
@@ -79,17 +76,17 @@ export class Piece {
       dy: Math.abs(this.position.y - position.y)
     };
   }
-  
+
   // Check if this piece can capture another piece
   canCapture(otherPiece: Piece): boolean {
     return this.color !== otherPiece.color;
   }
-  
+
   // Get piece display name (for UI or logs)
   getDisplayName(): string {
     return `${this.color === PieceColor.RED ? 'Red' : 'Black'} ${this.getPieceName()}`;
   }
-  
+
   // Get the name of the piece type
   getPieceName(): string {
     switch (this.type) {
@@ -102,10 +99,5 @@ export class Piece {
       case PieceType.SOLDIER: return this.color === PieceColor.RED ? 'Soldier (兵)' : 'Soldier (卒)';
       default: return 'Unknown Piece';
     }
-  }
-  
-  // Static method to get symbol for a piece type and color
-  static getSymbol(type: PieceType, color: PieceColor): string {
-    return Piece.FALLBACK_SYMBOLS[color][type];
   }
 }

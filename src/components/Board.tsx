@@ -6,20 +6,13 @@ import { Position, PieceColor, Piece } from '../models/Piece.js';
 // Unicode box drawing characters for board lines
 const HORIZONTAL = '─';
 const VERTICAL = '│';
-const CROSS = '┼';
 const TOP_RIGHT = '┐';
 const TOP_LEFT = '┌';
 const BOTTOM_RIGHT = '┘';
 const BOTTOM_LEFT = '└';
-const T_DOWN = '┬';
-const T_UP = '┴';
-const T_RIGHT = '├';
-const T_LEFT = '┤';
 
 // Board grid elements
-const GRID_HORIZONTAL = '───'; // Three horizontal lines for consistent spacing
-const SPACE = ' ';
-const EMPTY_POSITION = '·';  // Dot character for empty positions
+const EMPTY_POSITION = '─';  // Dot character for empty positions
 
 interface BoardProps {
   board: BoardModel;
@@ -47,11 +40,6 @@ export const BoardComponent: React.FC<BoardProps> = ({
   pieces.forEach(piece => {
     grid[piece.position.y][piece.position.x] = piece.symbol;
   });
-  
-  // Convert position to string coordinates for display
-  const posToCoord = (pos: Position): string => {
-    return `${pos.x},${pos.y}`;
-  };
   
   // Check if a position is valid for the selected piece
   const isValidMove = (pos: Position): boolean => {
@@ -81,21 +69,12 @@ export const BoardComponent: React.FC<BoardProps> = ({
       );
     };
     
-    // This function is no longer used as we're using a cleaner border approach
-    const createVerticalBorders = () => {
-      // Empty function, kept for reference
-      return [];
-    };
-    
     // Create the actual game board with pieces
     const createGameBoard = () => {
       const rows = [];
       
       // For each row
       for (let y = 0; y < ROWS; y++) {
-        // No river anymore
-        const isRiver = false;
-        
         // Create a row with pieces at intersections
         const row = (
           <Box key={`row-${y}`} marginLeft={2} flexDirection="row">
@@ -171,7 +150,7 @@ export const BoardComponent: React.FC<BoardProps> = ({
               // Render piece with fixed-width box for better alignment
               return (
                 <React.Fragment key={`cell-${x}-${y}`}>
-                  <Box width={3} justifyContent="center" key={`pos-${x}-${y}`}>
+                  <Box width={2} justifyContent="center" key={`pos-${x}-${y}`}>
                     <Text backgroundColor={bgColor} color={color} bold={true}>
                       {cellContent}
                     </Text>
