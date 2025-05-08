@@ -21,29 +21,9 @@ export interface Position {
 
 // Chess piece class
 export class Piece {
-  // Unicode chess symbols - using the specific Chinese chess Unicode block (U+2600 to U+26FF)
-  private static readonly SYMBOLS = {
-    [PieceColor.RED]: {
-      [PieceType.GENERAL]: '🩠', // Red General (U+1FA60)
-      [PieceType.ADVISOR]: '🩡', // Red Advisor (U+1FA61)
-      [PieceType.ELEPHANT]: '🩢', // Red Elephant (U+1FA62)
-      [PieceType.HORSE]: '🩣', // Red Horse (U+1FA63)
-      [PieceType.CHARIOT]: '🩤', // Red Chariot (U+1FA64)
-      [PieceType.CANNON]: '🩥', // Red Cannon (U+1FA65)
-      [PieceType.SOLDIER]: '🩦', // Red Soldier (U+1FA66)
-    },
-    [PieceColor.BLACK]: {
-      [PieceType.GENERAL]: '🩨', // Black General (U+1FA68)
-      [PieceType.ADVISOR]: '🩩', // Black Advisor (U+1FA69)
-      [PieceType.ELEPHANT]: '🩪', // Black Elephant (U+1FA6A)
-      [PieceType.HORSE]: '🩫', // Black Horse (U+1FA6B)
-      [PieceType.CHARIOT]: '🩬', // Black Chariot (U+1FA6C)
-      [PieceType.CANNON]: '🩭', // Black Cannon (U+1FA6D)
-      [PieceType.SOLDIER]: '🩮', // Black Soldier (U+1FA6E)
-    }
-  };
+  // Chinese characters for chess pieces
 
-  // Fallback symbols in case Unicode characters aren't properly supported
+  // Chinese characters for piece symbols
   private static readonly FALLBACK_SYMBOLS = {
     [PieceColor.RED]: {
       [PieceType.GENERAL]: '帅',
@@ -72,18 +52,14 @@ export class Piece {
   public position: Position;
   public readonly symbol: string;
   
-  constructor(id: string, type: PieceType, color: PieceColor, position: Position, useUnicode: boolean = false) {
+  constructor(id: string, type: PieceType, color: PieceColor, position: Position) {
     this.id = id;
     this.type = type;
     this.color = color;
     this.position = { ...position };
     
-    // Set symbol based on piece type and color
-    if (useUnicode) {
-      this.symbol = Piece.SYMBOLS[color][type];
-    } else {
-      this.symbol = Piece.FALLBACK_SYMBOLS[color][type];
-    }
+    // Set symbol based on piece type and color (using Chinese characters)
+    this.symbol = Piece.FALLBACK_SYMBOLS[color][type];
   }
   
   // Clone this piece
@@ -129,10 +105,7 @@ export class Piece {
   }
   
   // Static method to get symbol for a piece type and color
-  static getSymbol(type: PieceType, color: PieceColor, useUnicode: boolean = false): string {
-    if (useUnicode) {
-      return Piece.SYMBOLS[color][type];
-    }
+  static getSymbol(type: PieceType, color: PieceColor): string {
     return Piece.FALLBACK_SYMBOLS[color][type];
   }
 }
