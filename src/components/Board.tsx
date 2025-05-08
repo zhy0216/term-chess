@@ -62,43 +62,27 @@ export const BoardComponent: React.FC<BoardProps> = ({
     const ROWS = 10;
     const COLS = 9;
     
-    // Create the outer border with horizontal lines
+    // Create the outer border with horizontal lines that match content width
     const createHorizontalBorder = (isTop = true) => {
       const startChar = isTop ? TOP_LEFT : BOTTOM_LEFT;
       const endChar = isTop ? TOP_RIGHT : BOTTOM_RIGHT;
-      const middleChar = isTop ? T_DOWN : T_UP;
+      
+      // Calculate the exact width needed based on column count and box width
+      // Each position is exactly 3 chars wide plus 1 char space between positions
+      // For 9 positions: (9 positions × 3 chars) + (8 spaces between) = 35 chars
+      const borderWidth = (COLS * 3) + (COLS - 1);
       
       return (
         <Box marginLeft={2}>
-          <Text>{startChar}</Text>
-          {Array(COLS * 2 - 1).fill(0).map((_, i) => 
-            <Text key={`h-border-${i}`}>{HORIZONTAL}</Text>
-          )}
-          <Text>{endChar}</Text>
+          <Text>{startChar}{HORIZONTAL.repeat(borderWidth)}{endChar}</Text>
         </Box>
       );
     };
     
-    // Create vertical border lines
+    // This function is no longer used as we're using a cleaner border approach
     const createVerticalBorders = () => {
-      return Array(ROWS).fill(0).map((_, y) => {
-        const isRiver = y === 4 || y === 5;
-        
-        return (
-          <Box key={`v-border-${y}`} marginLeft={2}>
-            <Text>{VERTICAL}</Text>
-            {Array(COLS * 2 - 1).fill(0).map((_, x) => {
-              // Only show horizontal lines between intersections
-              if (x % 2 === 0) {
-                return <Text key={`v-space-${x}`}>{SPACE}</Text>;
-              } else {
-                return <Text key={`v-line-${x}`}>{isRiver ? SPACE : HORIZONTAL}</Text>;
-              }
-            })}
-            <Text>{VERTICAL}</Text>
-          </Box>
-        );
-      });
+      // Empty function, kept for reference
+      return [];
     };
     
     // Create the actual game board with pieces
@@ -111,7 +95,7 @@ export const BoardComponent: React.FC<BoardProps> = ({
         
         // Create a row with pieces at intersections
         const row = (
-          <Box key={`row-${y}`} marginLeft={2}>
+          <Box key={`row-${y}`} marginLeft={2} flexDirection="row">
             <Text>{VERTICAL}</Text>
             {Array(COLS).fill(0).map((_, x) => {
               const pos = { x, y };
