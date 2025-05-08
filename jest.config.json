@@ -1,0 +1,16 @@
+{
+  "preset": "ts-jest/presets/js-with-ts-esm",
+  "testEnvironment": "node",
+  "extensionsToTreatAsEsm": [".ts", ".tsx"],
+  "moduleNameMapper": {
+    "(.+)\\.js$": "$1"
+  },
+  "transform": {
+    "^.+\\.(ts|tsx)$": [
+      "ts-jest",
+      {
+        "useESM": true
+      }
+    ]
+  }
+}
