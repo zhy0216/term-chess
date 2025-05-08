@@ -84,7 +84,7 @@ export const App: React.FC = () => {
       <BoardComponent
         board={game.board}
         cursorPosition={game.cursorPosition}
-        selectedPiece={game.selectedPiece ? game.selectedPiece.position : null}
+        selectedPiece={game.selectedPiece}
         validMoves={game.getValidMovesForSelectedPiece()}
         currentPlayer={game.currentPlayer}
       />

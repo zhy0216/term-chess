@@ -1,4 +1,4 @@
-import { Piece, PieceType, PieceColor, Position, getPieceSymbol } from './Piece.js';
+import { Piece, PieceType, PieceColor, Position } from './Piece.js';
 
 // Chinese chess board is 9x10
 export const BOARD_WIDTH = 9;
@@ -54,8 +54,8 @@ export class Board {
 
   private addPiece(type: PieceType, color: PieceColor, position: Position) {
     const id = `${color}-${type}-${this.pieces.length}`;
-    const symbol = getPieceSymbol(type, color);
-    this.pieces.push({ id, type, color, position, symbol });
+    const piece = new Piece(id, type, color, position);
+    this.pieces.push(piece);
   }
 
   // Get piece at a specific position
@@ -85,8 +85,8 @@ export class Board {
       this.removePiece(targetPiece.id);
     }
 
-    // Update piece position
-    piece.position = { ...toPos };
+    // Update piece position using the Piece class's moveTo method
+    piece.moveTo(toPos);
     return true;
   }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Text } from 'ink';
 import { Board as BoardModel } from '../models/Board.js';
-import { Position, PieceColor } from '../models/Piece.js';
+import { Position, PieceColor, Piece } from '../models/Piece.js';
 
 interface BoardProps {
   board: BoardModel;
   cursorPosition: Position;
-  selectedPiece: Position | null;
+  selectedPiece: Piece | null;
   validMoves: Position[];
   currentPlayer: PieceColor;
 }
@@ -41,6 +41,11 @@ export const BoardComponent: React.FC<BoardProps> = ({
   return (
     <Box flexDirection="column" borderStyle="round" padding={1}>
       <Text>Current Player: {currentPlayer === PieceColor.RED ? '🔴 Red' : '⚫ Black'}</Text>
+      {selectedPiece && (
+        <Text color={selectedPiece.color === PieceColor.RED ? 'red' : 'black'}>
+          Selected: {selectedPiece.getDisplayName()} at ({selectedPiece.position.x}, {selectedPiece.position.y})
+        </Text>
+      )}
       
       {/* Board rows */}
       {Array(10).fill(0).map((_, y) => (
@@ -48,7 +53,7 @@ export const BoardComponent: React.FC<BoardProps> = ({
           {Array(9).fill(0).map((_, x) => {
             const pos = { x, y };
             const isAtCursor = x === cursorPosition.x && y === cursorPosition.y;
-            const isSelected = selectedPiece && x === selectedPiece.x && y === selectedPiece.y;
+            const isSelected = selectedPiece && x === selectedPiece.position.x && y === selectedPiece.position.y;
             const isHighlighted = isValidMove(pos);
             const piece = grid[y][x];
             
