@@ -104,6 +104,14 @@ export class Board {
   removePiece(pieceId: string) {
     this.pieces = this.pieces.filter(piece => piece.id !== pieceId);
   }
+  
+  // Add a piece back to the board (used for AI testing and minimax algorithm)
+  addPieceBackForTesting(piece: Piece) {
+    // Check if the piece already exists
+    if (!this.pieces.find(p => p.id === piece.id)) {
+      this.pieces.push(piece);
+    }
+  }
 
   // Check if a position is within the board boundaries
   isValidPosition(position: Position): boolean {
