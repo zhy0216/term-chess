@@ -19,8 +19,7 @@ const T_LEFT = '┤';
 // Board grid elements
 const GRID_HORIZONTAL = '───'; // Three horizontal lines for consistent spacing
 const SPACE = ' ';
-const DIAGONAL_SLASH = '╱';  // Diagonal for palace - forward slash
-const DIAGONAL_BACKSLASH = '╲'; // Diagonal for palace - back slash
+const EMPTY_POSITION = '·';  // Full-width dot for empty positions
 
 interface BoardProps {
   board: BoardModel;
@@ -171,24 +170,19 @@ export const BoardComponent: React.FC<BoardProps> = ({
               // Determine what to display at intersection
               let cellContent = piece;
               if (piece === ' ') {
-                if (isRedPalaceDiagonal) {
-                  cellContent = ((x === 3 && y === 7) || (x === 3 && y === 9) || (x === 5 && y === 7) || (x === 5 && y === 9)) 
-                    ? DIAGONAL_SLASH 
-                    : DIAGONAL_BACKSLASH;
-                } else if (isBlackPalaceDiagonal) {
-                  cellContent = ((x === 3 && y === 0) || (x === 3 && y === 2) || (x === 5 && y === 0) || (x === 5 && y === 2)) 
-                    ? DIAGONAL_SLASH 
-                    : DIAGONAL_BACKSLASH;
+                // No more diagonal lines in palaces, use uniform dots
+                if (isRedPalaceDiagonal || isBlackPalaceDiagonal) {
+                  cellContent = EMPTY_POSITION;
                 } else if (isRiver) {
                   // River labels
                   if (x === 1 && y === 4) cellContent = '楚';
                   else if (x === 2 && y === 4) cellContent = '河';
                   else if (x === 6 && y === 4) cellContent = '汉';
                   else if (x === 7 && y === 4) cellContent = '界';
-                  else cellContent = ' ';
+                  else cellContent = EMPTY_POSITION;
                 } else {
-                  // Use dots to represent positions
-                  cellContent = '.';
+                  // Use full-width dots to represent positions
+                  cellContent = EMPTY_POSITION;
                 }
               }
               
