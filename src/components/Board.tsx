@@ -58,9 +58,9 @@ export const BoardComponent: React.FC<BoardProps> = ({
       const endChar = isTop ? TOP_RIGHT : BOTTOM_RIGHT;
       
       // Calculate the exact width needed based on column count and box width
-      // Each position is exactly 3 chars wide plus 1 char space between positions
-      // For 9 positions: (9 positions × 3 chars) + (8 spaces between) = 35 chars
-      const borderWidth = (COLS * 3) + (COLS - 1);
+      // Each position is exactly 2 chars wide plus 1 char space between positions
+      // For 9 positions: (9 positions × 2 chars) + (8 spaces between) = 26 chars
+      const borderWidth = (COLS * 2) + (COLS - 1);
       
       return (
         <Box marginLeft={2}>
