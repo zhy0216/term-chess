@@ -19,7 +19,7 @@ const T_LEFT = '┤';
 // Board grid elements
 const GRID_HORIZONTAL = '───'; // Three horizontal lines for consistent spacing
 const SPACE = ' ';
-const EMPTY_POSITION = '·';  // Full-width dot for empty positions
+const EMPTY_POSITION = '·';  // Dot character for empty positions
 
 interface BoardProps {
   board: BoardModel;
@@ -186,13 +186,15 @@ export const BoardComponent: React.FC<BoardProps> = ({
                 }
               }
               
-              // Render piece with spacing for better alignment
+              // Render piece with fixed-width box for better alignment
               return (
                 <React.Fragment key={`cell-${x}-${y}`}>
-                  <Text backgroundColor={bgColor} color={color} bold={true}>
-                    {cellContent}
-                  </Text>
-                  {/* No horizontal lines between positions, just spacing */}
+                  <Box width={3} justifyContent="center" key={`pos-${x}-${y}`}>
+                    <Text backgroundColor={bgColor} color={color} bold={true}>
+                      {cellContent}
+                    </Text>
+                  </Box>
+                  {/* Add spacing between positions */}
                   {x < COLS - 1 && <Text>{' '}</Text>}
                 </React.Fragment>
               );
